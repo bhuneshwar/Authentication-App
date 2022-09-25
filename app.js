@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const dbConnect = require("./db/dbConnect");
 const bcrypt = require("bcrypt");
 const User = require("./db/userModel");
+const auth = require("./auth");
 
 
 //execute database connection
@@ -114,7 +115,15 @@ app.post("/login", (request, response) => {
     });
 });
 
+// free endpoint
+app.get("/free-endpoint", (request, response) => {
+  response.json({ message: "You are free to access me anytime" });
+});
 
 
+// authentication endpoint
+app.get("/auth-endpoint", auth, (request, response) => {
+  response.json({ message: "You are authorized to access me" });
+});
 
 module.exports = app;
